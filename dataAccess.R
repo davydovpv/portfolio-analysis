@@ -13,17 +13,3 @@ get.stock.history.raw <- function(symbol, start, end) {
 # Expose cached functions 
 get.stock.history <- addMemoization(get.stock.history.raw)
 
-
-# Gets a data.frame containing the ba
-get.closing.prices <- function(symbols, start, end) {
-  histories <- lapply(symbols, get.stock.history, start, end)
-  max.price <- max(sapply(histories, function(history) { max(history$Close) }))
-  
-  closingPrices <- lapply(histories, function(history) { history$Close })
-  
-  dataFrame <- data.frame(closingPrices)
-  colnames(dataFrame) <- symbols
-  
-  return(dataFrame)
-}
-

@@ -16,11 +16,34 @@ shinyUI(fluidPage(
     
     mainPanel(
       tabsetPanel(type = "tabs", 
-          tabPanel("Home", plotOutput("oldTimeseriesPlot")), 
-          tabPanel("Statistics"),
-          tabPanel("Moving Averages"), 
-          tabPanel("Forecasting"),
-          tabPanel("Optimization")
+          tabPanel("Home", 
+            plotOutput("oldTimeseriesPlot")), 
+          
+          tabPanel("Statistics", fluidPage(
+            fluidRow(h4("Stock Market")),
+            fluidRow(tableOutput("statisticsStockMarketTable")),
+            fluidRow(h4("Stocks")),
+            fluidRow(tableOutput("statisticsStocksTable")),
+            fluidRow(h4("Portfolio")),
+            fluidRow(tableOutput("statisticsPortfolioTable")),
+            fluidRow(
+              column(width=6, h6("Correlation")),
+              column(width=6, h6("Covariance"))
+            )),
+            fluidRow(
+              column(width=6, verbatimTextOutput("statisticsPortfolioCorrelation")),
+              column(width=6, verbatimTextOutput("statisticsPortfolioCovariance"))
+            )),
+          
+          tabPanel("Moving Averages", 
+            p("Coming soon..."),
+            plotOutput("maPlots")), 
+          
+          tabPanel("Forecasting",
+            p("Coming soon...")),
+          
+          tabPanel("Optimization",
+            plotOutput("optimizationFeasiblePlot"))
       )
     )
   )
