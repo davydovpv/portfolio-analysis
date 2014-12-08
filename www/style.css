@@ -1,0 +1,199 @@
+/*
+ * Base structure
+ */
+
+/* Move down content because we have a fixed navbar that is 50px tall */
+body {
+  padding-top: 60px;
+}
+
+
+/*
+ * Global add-ons
+ */
+
+.sub-header {
+  padding-bottom: 10px;
+  border-bottom: 1px solid #eee;
+}
+
+/*
+ * Top navigation
+ * Hide default border to remove 1px line.
+ */
+.navbar-fixed-top {
+  border: 0;
+}
+
+/*
+ * Sidebar
+ */
+
+/* Hide for mobile, show later */
+.sidebar {
+  display: none;
+}
+
+@media (min-width: 768px) {
+  .sidebar {
+    position: fixed;
+    top: 60px;
+    bottom: 0;
+    left: 0;
+    z-index: 1000;
+    display: block;
+    padding: 0;
+    overflow-x: hidden;
+    overflow-y: auto; /* Scrollable contents if viewport is shorter than content. */
+    background-color: #f5f5f5;
+    border-right: 1px solid #eee;
+  }
+}
+
+
+
+/*
+ * Main content
+ */
+
+.main {
+  padding: 20px;
+}
+@media (min-width: 768px) {
+  .main {
+    padding-right: 40px;
+    padding-left: 40px;
+  }
+}
+.main .page-header {
+  margin-top: 0;
+}
+
+
+/*
+ * Placeholder dashboard ideas
+ */
+
+.placeholders {
+  margin-bottom: 30px;
+  text-align: center;
+}
+.placeholders h4 {
+  margin-bottom: 0;
+}
+.placeholder {
+  margin-bottom: 20px;
+}
+.placeholder img {
+  display: inline-block;
+  border-radius: 50%;
+}
+
+
+.sidebar-inner {
+    position: relative;
+    width: 100%;
+    height: 100%;
+}
+
+.update-button {
+    border-radius: 0;
+    position: absolute;
+    left: 0;
+    right: 0;
+    width: 100%;
+    bottom: 0;
+}
+
+.sidebar-inner {
+    padding: 20px;
+}
+
+.stocks-panel {
+    position: absolute;
+    bottom: 65px;
+    padding-right: 20px;
+    width: 100%;
+}
+
+.glyphicon-remove {
+    cursor: pointer;
+}
+
+#hidden-inputs-view {
+   display: none;
+}
+
+.weight-input {
+	width: 60px;
+}
+
+.date-input {
+	margin: 0;
+	box-sizing: border-box;
+	display: inline-block;
+	width: 50%;
+}
+
+.input-xs  {
+    height: 26px;
+    padding: 0px 5px;
+    font-size: 13px;
+    line-height: 1.5;
+    border-radius: 3px;
+}
+
+
+
+
+
+/* Typeahead */
+
+.typeahead {
+	height: 34px;
+}
+
+.twitter-typeahead {
+    width: 100%;
+    margin-top: 4px;
+}
+
+.tt-query {
+  -webkit-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+     -moz-box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+          box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
+}
+
+.tt-hint {
+  color: #999
+}
+
+.tt-dropdown-menu {
+  padding: 8px 0;
+  background-color: #fff;
+  border: 1px solid #ccc;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+}
+
+.tt-suggestion {
+  padding: 5px;
+  font-size: 14px;
+    cursor: pointer;
+}
+
+.tt-suggestion.tt-cursor {
+  color: #fff;
+  background-color: #0097cf;
+}
+
+.tt-suggestion p {
+  margin: 0;
+}
+
+.gist {
+  font-size: 14px;
+}
+
+.empty-message {
+    padding: 5px;
+}

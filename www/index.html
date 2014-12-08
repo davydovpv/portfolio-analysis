@@ -1,0 +1,116 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="Finance Portfolio Application">
+    <meta name="author" content="Ryan Erdmann, Tyler Steiner">
+    <link rel="icon" href="">
+
+    <title>Plutus | Finance Application</title>
+
+    <link href="css/bootstrap.css" rel="stylesheet">
+    <link href="style.css" rel="stylesheet">
+	
+	  <script type="application/shiny-singletons"></script>
+	  <script type="application/html-dependencies">json2[2014.02.04];jquery[1.11.0];shiny[0.10.2.1];bootstrap-datepicker[1.0.2];bootstrap[2.3.2];bootstrap-responsive[2.3.2]</script>
+	
+	  <script src="shared/json2-min.js"></script>
+	  <script src="shared/jquery.js"></script>
+	  <script src="shared/shiny.js"></script>
+	  <script src="shared/datepicker/js/bootstrap-datepicker.min.js"></script>
+	  <script src="shared/bootstrap/js/bootstrap.min.js"></script>
+
+	  <link href="shared/shiny.css" rel="stylesheet" />
+	  <link href="shared/datepicker/css/datepicker.css" rel="stylesheet" />
+</head>
+
+<body>
+
+    <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
+        <div class="container-fluid">
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="#">Plutus: Portfolio Analysis</a>
+            </div>
+            <div id="navbar" class="navbar-collapse collapse">
+                <ul class="nav navbar-nav navbar-right">
+                    <li class="active"><a href="#">Time Series</a></li>
+                    <li><a href="#">Statistics</a></li>
+                    <li><a href="#">Moving Averages</a></li>
+                    <li><a href="#">Forecasting</a></li>
+                    <li><a href="#">Optimization</a></li>
+                    <li><a href="#">Compare</a></li>
+                </ul>
+            </div>
+        </div>
+    </nav>
+
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-sm-3 col-md-2 sidebar">
+
+                <div class="sidebar-inner">
+                    <form id="input-form">
+
+                        <div class="input-panel">
+							<h3>Settings</h3>
+                            <div class="input-group">
+                                <input class="form-control input-sm typeahead" type="text" placeholder="Add a Stock">
+
+                                <span class="input-group-btn">
+                                    <button class="btn btn-default btn-sm" type="button" id="add-stock-button"><span class="glyphicon glyphicon-plus"></span></button>
+                                </span>
+                            </div>
+                            <div class="shiny-date-range-input input-daterange shiny-bound-input" id="dates">
+                                <input class="form-control input-sm date-input left" type="text" data-initial-date="2013-11-24" data-date-start-view="month" data-date-format="yyyy-mm-dd" data-date-weekstart="0" data-date-language="en"><input class="form-control input-sm date-input right" type="text" data-initial-date="2014-11-24" data-date-start-view="month" data-date-format="yyyy-mm-dd" data-date-weekstart="0" data-date-language="en">
+                            </div>
+                        </div>
+
+                        <div id="hidden-inputs-view">
+                            Data synchronized with Shiny<br />
+                            <input id="selectedSymbols" type="text" value="" />
+                            <input id="selectedWeights" type="text" value="" />
+                        </div>
+
+                        <div class="stocks-panel">
+                            <h3>My Portfolio</h3>
+                            <table class="table table-condensed">
+                                <tr>
+                                    <th>Symbol</th>
+                                    <th>Weight</th>
+                                    <th></th>
+                                </tr>
+                                <tbody id="portfolio-view"></tbody>
+                            </table>
+                        </div>
+
+
+                        <button id="update-button" class="btn btn-success update-button" type="submit">Update</button>
+                    </form>
+                </div>
+
+            </div>
+            <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
+                <h2>Debug Output</h2>
+				<div id="debug" class="shiny-text-output shiny-bound-output well"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Bootstrap core JavaScript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+    <script src="js/typeahead.bundle.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0/handlebars.min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore-min.js"></script>
+    <script src="http://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.1.2/backbone-min.js"></script>
+    <script src="js/stock-selection.js"></script>
+</body>
+</html>
