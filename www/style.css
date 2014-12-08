@@ -143,9 +143,22 @@ body {
     border-radius: 3px;
 }
 
+h2 {
+    margin-top: 16px;
+    margin-bottom: 13px;
+}
 
 
+#maPlots > div {
+    width: 50% !important;
+    height: 450px !important;
+    float: left;
+}
 
+.ma-amount {
+    margin: 0;
+    margin-top: 8px;
+}
 
 /* Typeahead */
 

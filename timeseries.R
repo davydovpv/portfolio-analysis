@@ -10,7 +10,7 @@ convert.to.ts.with.sma <- function(closing.prices, fast=50, slow=200) {
   
   df <- data.frame(closing.prices, sma50, sma200)
   
-  adj.freq <- round(length(df$closing.prices) / 10)
+  adj.freq <- 52
   
   parts <- unlist(strsplit(format(start, format="%Y-%m-%d"), "-"))
   start.vector <- c(as.numeric(parts[1]), (as.numeric(parts[2]) -1) * 30 + as.numeric(parts[3]))

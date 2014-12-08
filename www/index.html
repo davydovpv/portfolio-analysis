@@ -113,20 +113,135 @@
                             <svg></svg>
                         </div>
                     </div>
+
                     <div class="tab-pane" id="tab-stats">
-                        Statistics
+                        
+                        <h2>Financial Calculations &amp; Statistics</h2>
+
+                        <div class="row">
+                            <div class="col-md-12">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">Market Stats</h4>
+                                    </div>
+                                    <div class="panel-body">
+                                        <div id="statisticsMarket" class="shiny-html-output"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="row">
+                            <div class="col-md-2">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">Portfolio Stats</h4>
+                                    </div>
+                                    <div class="panel-body">
+                                        <div id="statisticsPortfolio" class="shiny-html-output"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-5">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">Portfolio Correlation</h4>
+                                    </div>
+                                    <div class="panel-body">
+                                        <div id="statisticsCorrelation" class="shiny-html-output"></div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-5">
+                                <div class="panel panel-default">
+                                    <div class="panel-heading">
+                                        <h4 class="panel-title">Portfolio Covariance</h4>
+                                    </div>
+                                    <div class="panel-body">
+                                        <div id="statisticsCovariance" class="shiny-html-output"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <hr/>
+
+                        <h4>Portfolio Stocks</h4>
+                        <div class="row">
+                            <div class="col-md-6">
+                                <div id="statisticsStocks" class="shiny-html-output"></div>
+                            </div>
+                        </div>
                     </div>
+
                     <div class="tab-pane" id="tab-ma">
-                        Moving Averages
+                        <h2>Moving Average Analysis</h2>
+                        <div class="panel panel-default">
+                            <div class="panel-body form-inline">
+                                <input type="number" class="form-control input-sm" name="maFast" value="50" placeholder="Fast Period">
+                                <input type="number" class="form-control input-sm" name="maSlow" value="200" placeholder="Fast Period">
+                                <button type="submit" class="btn btn-default btn-sm">Update</button>
+                                <h4 class="ma-amount pull-right"><small>MA Strategy Earnings:</small> $20.41</h4>
+                            </div>
+                        </div>
+                        <hr />
+                        <div id="maPlots" class="shiny-html-output">
+                            <div id="maPlot1" class="shiny-plot-output"></div>
+                            <div id="maPlot2" class="shiny-plot-output"></div>
+                            <div id="maPlot3" class="shiny-plot-output"></div>
+                            <div id="maPlot4" class="shiny-plot-output"></div>
+                            <div id="maPlot5" class="shiny-plot-output"></div>
+                            <div id="maPlot6" class="shiny-plot-output"></div>
+                            <div id="maPlot7" class="shiny-plot-output"></div>
+                            <div id="maPlot8" class="shiny-plot-output"></div>
+                            <div id="maPlot9" class="shiny-plot-output"></div>
+                            <div id="maPlot10" class="shiny-plot-output"></div>
+                        </div>
                     </div>
+
                     <div class="tab-pane" id="tab-forecast">
-                        Forecasting
+                        <h2>Forecasting</h2>
+                        
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Linear Regression Models</h3>
+                            </div>
+                            <div class="panel-body">
+                            </div>
+                        </div>
+
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Single Exponential Models</h3>
+                            </div>
+                            <div class="panel-body">
+                            </div>
+                        </div>
+                        
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Holt's Exponential Models</h3>
+                            </div>
+                            <div class="panel-body">
+                            </div>
+                        </div>
+
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title">Holt-Winters Exponential Models</h3>
+                            </div>
+                            <div class="panel-body">
+                            </div>
+                        </div>
                     </div>
+
                     <div class="tab-pane" id="tab-optimization">
-                        Optimization
+                        <h2>Portfolio Optimization</h2>
                     </div>
+
                     <div class="tab-pane" id="tab-compare">
-                        Compare
+                        <h2>Compare Portfolios</h2>
+                        <div id="debugReturns" class="shiny-html-output"></div>
                     </div>
                 </div>
             </div>
