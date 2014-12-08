@@ -12,18 +12,26 @@
 
     <link href="css/bootstrap.css" rel="stylesheet">
     <link href="style.css" rel="stylesheet">
-	
-	  <script type="application/shiny-singletons"></script>
-	  <script type="application/html-dependencies">json2[2014.02.04];jquery[1.11.0];shiny[0.10.2.1];bootstrap-datepicker[1.0.2];bootstrap[2.3.2];bootstrap-responsive[2.3.2]</script>
-	
-	  <script src="shared/json2-min.js"></script>
-	  <script src="shared/jquery.js"></script>
-	  <script src="shared/shiny.js"></script>
-	  <script src="shared/datepicker/js/bootstrap-datepicker.min.js"></script>
-	  <script src="shared/bootstrap/js/bootstrap.min.js"></script>
 
-	  <link href="shared/shiny.css" rel="stylesheet" />
-	  <link href="shared/datepicker/css/datepicker.css" rel="stylesheet" />
+    <script type="application/shiny-singletons">
+    </script>
+    <script type="application/html-dependencies">
+        json2[2014.02.04];jquery[1.11.0];shiny[0.10.2.1];bootstrap-datepicker[1.0.2];bootstrap[2.3.2];bootstrap-responsive[2.3.2]
+    </script>
+
+    <script src="shared/json2-min.js"></script>
+    <script src="shared/jquery.js"></script>
+    <script src="shared/shiny.js"></script>
+    <script src="shared/datepicker/js/bootstrap-datepicker.min.js"></script>
+    <script src="shared/bootstrap/js/bootstrap.min.js"></script>
+
+    <script src="d3/d3.v3.min.js"></script>
+    <script src="nvd3/nv.d3.min.js"></script>
+    <script src="linechart-binding.js"></script>
+
+    <link href="shared/shiny.css" rel="stylesheet" />
+    <link href="shared/datepicker/css/datepicker.css" rel="stylesheet" />
+    <link href="nvd3/nv.d3.min.css" rel="stylesheet" />
 </head>
 
 <body>
@@ -60,7 +68,7 @@
                     <form id="input-form">
 
                         <div class="input-panel">
-							<h3>Settings</h3>
+                            <h3>Settings</h3>
                             <div class="input-group">
                                 <input class="form-control input-sm typeahead" type="text" placeholder="Add a Stock">
 
@@ -100,7 +108,10 @@
             <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
                 <div class="tab-content">
                     <div class="tab-pane active" id="tab-timeseries">
-                        Timeseries
+                        <h2>Timeseries Analysis</h2>
+                        <div id="timeseriesPlot" class="nvd3-linechart" style="width: 100%; height: 400px;">
+                            <svg></svg>
+                        </div>
                     </div>
                     <div class="tab-pane" id="tab-stats">
                         Statistics
@@ -115,10 +126,7 @@
                         Optimization
                     </div>
                     <div class="tab-pane" id="tab-compare">
-                        <h3>Debug Output</h3>
-                        <div class="well">
-                            <div id="debug" class="shiny-text-output shiny-bound-output"></div>
-                        </div>
+                        Compare
                     </div>
                 </div>
             </div>
@@ -133,5 +141,26 @@
     <script src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore-min.js"></script>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.1.2/backbone-min.js"></script>
     <script src="js/stock-selection.js"></script>
+    
+    <script>
+        $(function () {
+
+            function setHeights() {
+                var height = $('.sidebar').height() - 120;
+                var selectors = ['#timeseriesPlot'];
+
+                for (var selector in selectors) {
+                    var $el = $(selectors[selector]);
+                    $el.height(height);
+                }
+            }
+
+            $(window).resize(function() {
+                setHeights();
+            });
+
+            setHeights();
+        })
+    </script>
 </body>
 </html>

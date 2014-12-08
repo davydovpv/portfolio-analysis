@@ -1,7 +1,7 @@
 # Returns a vector of selected symbols
 # input$symbols is a comma separated string, potentially with spaces
 getSelectedSymbols <- function(input) {
-  symbols <- strsplit(input$selectedSymbols, ",")
+  symbols <- unlist(strsplit(input$selectedSymbols, ","))  
   symbols
 }
 

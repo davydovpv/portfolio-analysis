@@ -33,8 +33,10 @@ renderLineChart <- function(expr, env=parent.frame(), quoted=FALSE) {
     
     mapply(function(col, name) {
       
+      
       values <- mapply(function(val, i) {
-        list(x = i, y = val)
+        # I changed x = i to this so we get the date from the first column
+        list(x = dataframe[,1][i], y = val)
       }, col, 1:nrow(dataframe), SIMPLIFY=FALSE, USE.NAMES=FALSE)
       
       list(key = name, values = values)
