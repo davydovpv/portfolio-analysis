@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+﻿<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="utf-8">
@@ -8,7 +8,7 @@
     <meta name="author" content="Ryan Erdmann, Tyler Steiner">
     <link rel="icon" href="">
 
-    <title>Plutus | Finance Application</title>
+    <title>Finance Application</title>
 
     <link href="css/bootstrap.css" rel="stylesheet">
     <link href="style.css" rel="stylesheet">
@@ -37,16 +37,16 @@
                     <span class="icon-bar"></span>
                     <span class="icon-bar"></span>
                 </button>
-                <a class="navbar-brand" href="#">Plutus: Portfolio Analysis</a>
+                <a class="navbar-brand" href="#">Portfolio Analysis</a>
             </div>
             <div id="navbar" class="navbar-collapse collapse">
                 <ul class="nav navbar-nav navbar-right">
-                    <li class="active"><a href="#">Time Series</a></li>
-                    <li><a href="#">Statistics</a></li>
-                    <li><a href="#">Moving Averages</a></li>
-                    <li><a href="#">Forecasting</a></li>
-                    <li><a href="#">Optimization</a></li>
-                    <li><a href="#">Compare</a></li>
+                    <li class="active"><a data-toggle="tab" href="#tab-timeseries">Time Series</a></li>
+                    <li><a data-toggle="tab" href="#tab-stats">Statistics</a></li>
+                    <li><a data-toggle="tab" href="#tab-ma">Moving Averages</a></li>
+                    <li><a data-toggle="tab" href="#tab-forecast">Forecasting</a></li>
+                    <li><a data-toggle="tab" href="#tab-optimization">Optimization</a></li>
+                    <li><a data-toggle="tab" href="#tab-compare">Compare</a></li>
                 </ul>
             </div>
         </div>
@@ -98,8 +98,29 @@
 
             </div>
             <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
-                <h2>Debug Output</h2>
-				<div id="debug" class="shiny-text-output shiny-bound-output well"></div>
+                <div class="tab-content">
+                    <div class="tab-pane active" id="tab-timeseries">
+                        Timeseries
+                    </div>
+                    <div class="tab-pane" id="tab-stats">
+                        Statistics
+                    </div>
+                    <div class="tab-pane" id="tab-ma">
+                        Moving Averages
+                    </div>
+                    <div class="tab-pane" id="tab-forecast">
+                        Forecasting
+                    </div>
+                    <div class="tab-pane" id="tab-optimization">
+                        Optimization
+                    </div>
+                    <div class="tab-pane" id="tab-compare">
+                        <h3>Debug Output</h3>
+                        <div class="well">
+                            <div id="debug" class="shiny-text-output shiny-bound-output"></div>
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>

@@ -10,7 +10,7 @@ source('functions.R')
 shinyServer(function(input, output, session) {
   
   output$debug <- renderText({
-    getEndDate(input)
+    getSelectedWeights(input)
   })
   
   currentPrices <- reactive({
