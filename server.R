@@ -85,8 +85,8 @@ shinyServer(function(input, output, session) {
     p.sd <- sqrt(t(w) %*% C %*% w)
     
     data.frame(
-      Return = to.percent(get.portfolio.mean(symbols, weights, start, end)),
-      StDev = to.percent(p.sd))
+      ExpectedReturn = to.percent(get.portfolio.mean(symbols, weights, start, end)),
+      StandardDeviation = to.percent(p.sd))
   })
   
   output$statisticsStocks <- renderTable({
@@ -277,12 +277,16 @@ shinyServer(function(input, output, session) {
   feasible.returns <- reactive({
     comparison.table <- currentReturns()
     symbols <- getSelectedSymbols(input)
+    start <- getStartDate(input)
+    end <- getEndDate(input)
     
     num <- length(symbols)
     
     r <- matrix(colMeans(comparison.table)*52, nrow = num, ncol = 1)
     C <- matrix(cov(comparison.table), nrow = num, ncol = num)
-    
+        
+    expected.returns <- as.vector(sapply(symbols, get.expected.return, start=start, end=end))
+        
     means <- c()
     sds <- c()  
     weights <- c()
@@ -292,6 +296,7 @@ shinyServer(function(input, output, session) {
     for (i in 1:length(all.weights)) {
       w <- matrix(all.weights[[i]], nrow=num, ncol=1)
       p.mean <- t(w) %*% r
+      p.mean <- sum(expected.returns * as.vector(w))
       p.sd <- sqrt(t(w) %*% C %*% w)
       
       means <- c(means, p.mean)

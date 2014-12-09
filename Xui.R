@@ -1,5 +1,5 @@
-library(ggvis)
 library(dplyr)
+library(ggvis)
 
 shinyUI(fluidPage(
   headerPanel("Feasible Portfolios"),
