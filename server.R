@@ -112,6 +112,7 @@ shinyServer(function(input, output, session) {
     
     symbols <- getSelectedSymbols(input)
     stock.prices <- currentPrices()
+    start <- getStartDate(input)
         
     for (i in 1:length(symbols)) {
       local({
@@ -119,13 +120,13 @@ shinyServer(function(input, output, session) {
         plotname <- paste0("maPlot", index)
         
         output[[plotname]] <- renderPlot({
-          plot.timeseries.with.sma(stock.prices[,index], symbols[index], fast, slow)
+          plot.timeseries.with.sma(stock.prices[,index], symbols[index], start, fast, slow)
         })
         
       })
     }
     
-    plot_output_list <- lapply(1:5, function(i) {
+    plot_output_list <- lapply(1:length(symbols), function(i) {
       plotname <- paste0("maPlot", i)
       plotOutput(plotname)
     })
@@ -137,7 +138,109 @@ shinyServer(function(input, output, session) {
   
   # Forecasting Page ---------------
   
+  output$forecastLinearPlots <- renderUI({
+    symbols <- getSelectedSymbols(input)
+    stock.prices <- currentPricesWithDates()
+    
+    for (i in 1:length(symbols)) {
+      local({
+        index <- i
+        plotname <- paste0("linearPlot", index)
+        
+        output[[plotname]] <- renderPlot({
+          plot.linear.model(stock.prices[c(1, index+1)], symbols[index])
+        })
+        
+      })
+    }
+    
+    plot_output_list <- lapply(1:length(symbols), function(i) {
+      plotname <- paste0("linearPlot", i)
+      plotOutput(plotname)
+    })
+    
+    # Convert the list to a tagList - this is necessary for the list of items    
+    # to display properly.
+    do.call(tagList, plot_output_list)
+  })
   
+  output$forecastSingleExpPlots <- renderUI({
+    symbols <- getSelectedSymbols(input)
+    stock.prices <- currentPricesWithDates()
+    
+    for (i in 1:length(symbols)) {
+      local({
+        index <- i
+        plotname <- paste0("singleExpPlot", index)
+        
+        output[[plotname]] <- renderPlot({
+          plot.single.exp.model(stock.prices[c(1, index+1)], symbols[index])
+        })
+        
+      })
+    }
+    
+    plot_output_list <- lapply(1:length(symbols), function(i) {
+      plotname <- paste0("singleExpPlot", i)
+      plotOutput(plotname)
+    })
+    
+    # Convert the list to a tagList - this is necessary for the list of items    
+    # to display properly.
+    do.call(tagList, plot_output_list)
+  })
+  
+  output$forecastHoltPlots <- renderUI({
+    symbols <- getSelectedSymbols(input)
+    stock.prices <- currentPricesWithDates()
+    
+    for (i in 1:length(symbols)) {
+      local({
+        index <- i
+        plotname <- paste0("holtPlot", index)
+        
+        output[[plotname]] <- renderPlot({
+          plot.holt.model(stock.prices[c(1, index+1)], symbols[index])
+        })
+        
+      })
+    }
+    
+    plot_output_list <- lapply(1:length(symbols), function(i) {
+      plotname <- paste0("holtPlot", i)
+      plotOutput(plotname)
+    })
+    
+    # Convert the list to a tagList - this is necessary for the list of items    
+    # to display properly.
+    do.call(tagList, plot_output_list)
+  })
+  
+  output$forecastHoltWintersPlots <- renderUI({
+    symbols <- getSelectedSymbols(input)
+    stock.prices <- currentPricesWithDates()
+    
+    for (i in 1:length(symbols)) {
+      local({
+        index <- i
+        plotname <- paste0("holtWintersPlot", index)
+        
+        output[[plotname]] <- renderPlot({
+          plot.holt.winters.model(stock.prices[c(1, index+1)], symbols[index])
+        })
+        
+      })
+    }
+    
+    plot_output_list <- lapply(1:length(symbols), function(i) {
+      plotname <- paste0("holtWintersPlot", i)
+      plotOutput(plotname)
+    })
+    
+    # Convert the list to a tagList - this is necessary for the list of items    
+    # to display properly.
+    do.call(tagList, plot_output_list)
+  })
   
   # Debug -----------
   
