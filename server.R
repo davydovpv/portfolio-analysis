@@ -1,5 +1,7 @@
 library(shiny)
 library(Quandl)
+library(plyr)
+library(ggvis)
 
 source('inputParsing.R')
 
@@ -257,7 +259,7 @@ shinyServer(function(input, output, session) {
     
     num <- length(symbols)
     
-    r <- matrix(colMeans(comparison.table), nrow = num, ncol = 1)
+    r <- matrix(colMeans(comparison.table)*52, nrow = num, ncol = 1)
     C <- matrix(cov(comparison.table), nrow = num, ncol = num)
     
     means <- c()

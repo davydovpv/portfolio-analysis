@@ -1,0 +1,95 @@
+﻿
+<!DOCTYPE html>
+<html>
+<head>
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
+  <script type="application/shiny-singletons"></script>
+  <script type="application/html-dependencies">json2[2014.02.04];jquery[1.11.0];shiny[0.10.2.1];bootstrap-datepicker[1.0.2];jquery-ui[1.10.4];d3[3.4.10];vega[1.4.2];lodash[2.2.1];ggvis[0.4];shiny-ggvis[0.4];bootstrap[2.3.2];bootstrap-responsive[2.3.2]</script>
+<script src="shared/json2-min.js"></script>
+<script src="shared/jquery.js"></script>
+<link href="shared/shiny.css" rel="stylesheet" />
+<script src="shared/shiny.js"></script>
+<link href="shared/datepicker/css/datepicker.css" rel="stylesheet" />
+<script src="shared/datepicker/js/bootstrap-datepicker.min.js"></script>
+<link href="jquery-ui-1.10.4/css/smoothness/jquery-ui-1.10.4.custom.min.css" rel="stylesheet" />
+<script src="jquery-ui-1.10.4/js/jquery-ui-1.10.4.custom.min.js"></script>
+<script src="d3-3.4.10/d3.min.js"></script>
+<script src="vega-1.4.2/vega.min.js"></script>
+<script src="lodash-2.2.1/lodash.min.js"></script>
+<script>var lodash = _.noConflict();</script>
+<link href="ggvis-0.4/css/ggvis.css" rel="stylesheet" />
+<script src="ggvis-0.4/js/ggvis.js"></script>
+<script src="shiny-ggvis-0.4/js/shiny-ggvis.js"></script>
+<link href="shared/bootstrap/css/bootstrap.min.css" rel="stylesheet" />
+<script src="shared/bootstrap/js/bootstrap.min.js"></script>
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link href="shared/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" />
+    
+    <script>
+        $(function() {
+            function getQueryVariable(variable) {
+                var query = window.location.search.substring(1);
+                var vars = query.split('&');
+                for (var i = 0; i < vars.length; i++) {
+                    var pair = vars[i].split('=');
+                    if (decodeURIComponent(pair[0]) == variable) {
+                        return decodeURIComponent(pair[1]);
+                    }
+                }
+                console.log('Query variable %s not found', variable);
+            }
+
+            var symbols = getQueryVariable('symbols');
+            //var start = getQueryVariable('start');
+            //var end = getQueryVariable('end');
+            setTimeout(function() {
+                $('#selectedSymbols').val(symbols).trigger('change');
+                //$('.date-start').val(start).trigger('change');
+                //$('.date-end').val(end).trigger('change');
+            }, 1000);
+            //
+        });
+        
+    </script>
+    <title>THings</title>
+</head>
+<body>
+<div class="container-fluid">
+  
+    <div class="span12">
+        <div style="display: none;">
+            <div id="dates" class="shiny-date-range-input input-daterange">
+                <label class="control-label" for="dates">
+                    <h3>Date range</h3>
+                </label>
+                <input class="input-small date-start" type="text" data-date-language="en" data-date-weekstart="0" data-date-format="yyyy-mm-dd" data-date-start-view="month" data-initial-date="2013-01-01" />
+                to
+                <input class="input-small date-end" type="text" data-date-language="en" data-date-weekstart="0" data-date-format="yyyy-mm-dd" data-date-start-view="month" />
+            </div>
+            <label for="selectedSymbols">Symbols</label>
+            <input id="selectedSymbols" value="MSFT,IBM" type="text" />
+        </div>
+
+        <div id="optimizationPlot-container" class="ggvis-output-container">
+            <div id="optimizationPlot" class="ggvis-output"></div>
+            <div class="plot-gear-icon">
+                <nav class="ggvis-control">
+                    <a class="ggvis-dropdown-toggle" title="Controls" onclick="return false;"></a>
+                    <ul class="ggvis-dropdown">
+                        <li>
+                            Renderer: 
+                            <a id="optimizationPlot_renderer_svg" class="ggvis-renderer-button" onclick="return false;" data-plot-id="optimizationPlot" data-renderer="svg">SVG</a>
+                            | 
+                            <a id="optimizationPlot_renderer_canvas" class="ggvis-renderer-button" onclick="return false;" data-plot-id="optimizationPlot" data-renderer="canvas">Canvas</a>
+                        </li>
+                        <li>
+                            <a id="optimizationPlot_download" class="ggvis-download" data-plot-id="optimizationPlot">Download</a>
+                        </li>
+                    </ul>
+                </nav>
+            </div>
+        </div>
+    </div>
+</div>
+</body>
+</html>
