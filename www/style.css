@@ -177,6 +177,10 @@ h2 {
     width: 100% !important;
 }
 
+.ma-amount {
+    display: none;
+}
+
 /* Typeahead */
 
 .typeahead {
