@@ -24,6 +24,16 @@ estimate.annualized.rate.of.return <- function(rates, m = 52) {
   alpha
 }
 
+get.geometric.mean <- function(col) {
+  n <- length(col)
+  term <- col[length(col)]/col[1]
+  term^(52/n) - 1
+}
+
+to.percent <- function(d) {
+  paste0(round(d*100, 2), "%")
+}
+
 convert.prices.to.returns <- function(dataframe) {
   rates <- get.rates.of.return(dataframe$Close)
   dates <- (dataframe$Date)[-1]
@@ -60,10 +70,10 @@ get.closing.prices <- function(symbols, start, end, includeDates=FALSE) {
 get.closing.returns <- function(symbols, start, end) {
   closing.prices <- get.closing.prices(symbols, start, end)
   closing.returns <- apply(closing.prices, 2, get.rates.of.return)
-  closing.returns
+  data.frame(closing.returns)
 }
 
-get.weights <- function(sum, num, delta) {
+get.weights.raw <- function(sum, num, delta) {
   
   if (num <= 1) {
     print("Error: num < 2")
@@ -85,3 +95,5 @@ get.weights <- function(sum, num, delta) {
   }
   
 }
+
+get.weights <- addMemoization(get.weights.raw)

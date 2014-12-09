@@ -56,7 +56,7 @@ get.annualized.Rf <- function() {
   rf
 }
 
-get.expected.return <- function(symbol, start, end) {
+get.expected.return.raw <- function(symbol, start, end) {
   erp <- get.erp(start, end)
   beta <- get.beta(symbol, start, end)
   rf <- get.annualized.Rf()
@@ -65,6 +65,7 @@ get.expected.return <- function(symbol, start, end) {
   annualized.Re
 }
 
+get.expected.return <- addMemoization(get.expected.return.raw)
 
 # -------
 
@@ -79,21 +80,53 @@ get.industries <- function(symbols) {
 }
 
 get.betas <- function (symbols, start, end) {
-  symbols
+  as.vector(sapply(symbols, get.beta, start=start, end=end))
 }
 
-get.annual.returns <- function (symbols, start, end) {
-  symbols
+get.annual.returns <- function (stock.prices, start, end) {
+  geometric.means <- apply(stock.prices, 2, get.geometric.mean)
+  as.vector(geometric.means)
 }
 
 get.expected.returns <- function(symbols, start, end) {
-  symbols
+  rf <- get.annualized.Rf()
+  erp <- get.erp(start, end)
+  
+  expected <- sapply(symbols, function(symbol) {
+    beta <- get.beta(symbol, start, end)
+    re <- rf + beta * erp
+  })
+  
+  as.vector(expected)
 }
 
 get.profit <- function(closing.prices, start, end) {
-  colnames(closing.prices)
+  profits <- apply(closing.prices, 2, function(col) {
+    col[length(col)] - col[1]
+  })
+  as.vector(profits)
 }
 
-get.sharpe.ratios <- function(symbols, start, end) {
-  symbols
+get.sharpe.ratios <- function(expected.returns, standard.deviations, rf) {
+  sharpes <- c()
+  for(i in 1:length(expected.returns)) {
+    s <- (expected.returns[i] - rf)/ standard.deviations[i]
+    sharpes <- c(sharpes, s)
+  }
+  sharpes
+}
+
+
+# ------------
+
+get.portfolio.mean <- function(symbols, weights, start, end) {
+  sum <- 0
+  for (i in 1:length(symbols)) {
+    s <- symbols[i]
+    w <- weights[i]
+    
+    re <- get.expected.return(s, start, end)
+    sum <- sum + w * re
+  }
+  sum
 }

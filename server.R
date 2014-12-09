@@ -55,21 +55,38 @@ shinyServer(function(input, output, session) {
     start <- getStartDate(input)
     end <- getEndDate(input)
     
+    equity.market <- get.equity.market(start, end)
+    
     market <- data.frame(
-      erp = get.erp(start, end),
-      rf = get.annualized.Rf(),
-      ret = c(0),
-      sig = c(0)
+      erp = to.percent(get.geometric.mean(equity.market$Close) - get.annualized.Rf()),
+      rf = to.percent(get.annualized.Rf()),
+      ret = to.percent(get.geometric.mean(equity.market$Close)),
+      sig = to.percent(sd(convert.prices.to.returns(equity.market)$Close))
       )
     
-    colnames(market) <- c("ERP", "Risk Free Rate", "Return", "Standard Deviation")
+    colnames(market) <- c("ERP", "Risk Free Rate", "Annual Return", "Standard Deviation")
     market
   })
   
   output$statisticsPortfolio <- renderTable({
+    symbols <- getSelectedSymbols(input)
+    weights <- getSelectedWeights(input)
+    start <- getStartDate(input)
+    end <- getEndDate(input)
+    
+    comparison.table <- currentReturns()
+    
+    r <- matrix(comparison.table, nrow = length(symbols), ncol = 1)
+    
+    # Covariance Matrix
+    C <- matrix(cov(comparison.table), nrow = length(symbols), ncol = length(symbols))
+    w <- as.matrix(weights)
+    
+    p.sd <- sqrt(t(w) %*% C %*% w)
+    
     data.frame(
-      Return = c(0),
-      StDev = c(0))
+      Return = to.percent(get.portfolio.mean(symbols, weights, start, end)),
+      StDev = to.percent(p.sd))
   })
   
   output$statisticsStocks <- renderTable({
@@ -80,18 +97,22 @@ shinyServer(function(input, output, session) {
     stock.prices <- currentPrices()
     stock.returns <- currentReturns()
     
+    expected.returns <- get.expected.returns(symbols, start, end)
+    standard.deviations <- as.vector(sapply(stock.returns, sd))
+    rf <- get.annualized.Rf()
+        
     stocksTable <- data.frame(
       Symbol = symbols,
-      Industry = get.industries(symbols),
+      #Industry = get.industries(symbols),
       Beta = get.betas(symbols, start, end),
-      AnnualReturn = get.annual.returns(symbols, start, end),
-      ExpectedReturn = get.expected.returns(symbols, start, end),
-      StandardDeviation = as.vector(sapply(stock.prices, sd)),
+      AnnualReturn = sapply(get.annual.returns(stock.prices, start, end), function(g) { to.percent(g) }),
+      ExpectedReturn = sapply(expected.returns, function(g) { to.percent(g) }),
+      StandardDeviation = sapply(standard.deviations, function(g) { to.percent(g)}),
       Average = as.vector(sapply(stock.prices, mean)),
       High = as.vector(sapply(stock.prices, max)),
       Low = as.vector(sapply(stock.prices, min)),
-      Profit = get.profit(stock.prices, start, end),
-      SharpeRatio = get.sharpe.ratios(symbols, start, end)
+      ProfitPerShare = get.profit(stock.prices, start, end),
+      SharpeRatio = get.sharpe.ratios(expected.returns, standard.deviations, rf)
     )
     
     stocksTable
@@ -266,7 +287,7 @@ shinyServer(function(input, output, session) {
     sds <- c()  
     weights <- c()
     
-    all.weights <- get.weights(1, num, .1)
+    all.weights <- get.weights(1, num, .02)
     
     for (i in 1:length(all.weights)) {
       w <- matrix(all.weights[[i]], nrow=num, ncol=1)
@@ -316,7 +337,7 @@ shinyServer(function(input, output, session) {
                    fillOpacity := 0.2, fillOpacity.hover := 0.5) %>%
       add_tooltip(tooltip, "hover") %>%
       add_axis("x", title = "Standard Deviation (%)") %>%
-      add_axis("y", title = "Mean Return (%)") 
+      add_axis("y", title = "Mean Expected Return (%)") 
   })
   
   vis %>% bind_shiny("optimizationPlot")
