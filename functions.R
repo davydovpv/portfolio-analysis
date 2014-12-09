@@ -63,3 +63,25 @@ get.closing.returns <- function(symbols, start, end) {
   closing.returns
 }
 
+get.weights <- function(sum, num, delta) {
+  
+  if (num <= 1) {
+    print("Error: num < 2")
+    return (NULL)
+  }
+  
+  if (num == 2) {
+    return (lapply(seq(0, sum, delta), function(i) {
+      c(i, sum-i)
+    }))
+  }
+  
+  if (num >= 3) {
+    return(unlist((lapply(seq(0, sum, delta), function(i) {
+      return (lapply(get.weights(sum-i, num-1, delta), function(rest) {
+        return (c(i, rest))
+      }))
+    })), recursive = F)) 
+  }
+  
+}

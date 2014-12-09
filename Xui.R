@@ -1,8 +1,11 @@
+library(ggvis)
+library(dplyr)
+
 shinyUI(fluidPage(
-  headerPanel("Dynamic number of plots"),
+  headerPanel("THings"),
   mainPanel(
-    sliderInput("n", "Number of plots", value=1, min=1, max=5),
-    # This is the dynamic UI for the plots
-    uiOutput("maPlots")
+    dateRangeInput("dates", label = h3("Date range"), start="2013-01-01"),
+    textInput("selectedSymbols", "Symbols", "MSFT,AAPL,IBM"),
+    ggvisOutput("optimizationPlot")
   )
 ))

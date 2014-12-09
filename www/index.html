@@ -16,13 +16,24 @@
     <script type="application/shiny-singletons">
     </script>
     <script type="application/html-dependencies">
-        json2[2014.02.04];jquery[1.11.0];shiny[0.10.2.1];bootstrap-datepicker[1.0.2];bootstrap[2.3.2];bootstrap-responsive[2.3.2]
+        json2[2014.02.04];jquery[1.11.0];shiny[0.10.2.1];bootstrap-datepicker[1.0.2];jquery-ui[1.10.4];d3[3.4.10];vega[1.4.2];lodash[2.2.1];ggvis[0.4];shiny-ggvis[0.4];bootstrap[2.3.2];bootstrap-responsive[2.3.2]
     </script>
 
     <script src="shared/json2-min.js"></script>
     <script src="shared/jquery.js"></script>
     <script src="shared/shiny.js"></script>
     <script src="shared/datepicker/js/bootstrap-datepicker.min.js"></script>
+    
+    <link href="jquery-ui-1.10.4/css/smoothness/jquery-ui-1.10.4.custom.min.css" rel="stylesheet" />
+    <script src="jquery-ui-1.10.4/js/jquery-ui-1.10.4.custom.min.js"></script>
+    <script src="d3-3.4.10/d3.min.js"></script>
+    <script src="vega-1.4.2/vega.min.js"></script>
+    <script src="lodash-2.2.1/lodash.min.js"></script>
+    <script>var lodash = _.noConflict();</script>
+    <link href="ggvis-0.4/css/ggvis.css" rel="stylesheet" />
+    <script src="ggvis-0.4/js/ggvis.js"></script>
+    <script src="shiny-ggvis-0.4/js/shiny-ggvis.js"></script>
+
     <script src="shared/bootstrap/js/bootstrap.min.js"></script>
 
     <script src="d3/d3.v3.min.js"></script>
@@ -32,6 +43,7 @@
     <link href="shared/shiny.css" rel="stylesheet" />
     <link href="shared/datepicker/css/datepicker.css" rel="stylesheet" />
     <link href="nvd3/nv.d3.min.css" rel="stylesheet" />
+    <link href="shared/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" />
 </head>
 
 <body>
@@ -285,6 +297,27 @@
 
                     <div class="tab-pane" id="tab-optimization">
                         <h2>Portfolio Optimization</h2>
+                        
+                        <h3>Feasible Portfolios</h3>
+                        <div id="optimizationPlot-container" class="ggvis-output-container">
+                            <div id="optimizationPlot" class="ggvis-output"></div>
+                            <div class="plot-gear-icon">
+                                <nav class="ggvis-control">
+                                    <a class="ggvis-dropdown-toggle" title="Controls" onclick="return false;"></a>
+                                    <ul class="ggvis-dropdown">
+                                        <li>
+                                            Renderer:
+                                            <a id="optimizationPlot_renderer_svg" class="ggvis-renderer-button" onclick="return false;" data-plot-id="optimizationPlot" data-renderer="svg">SVG</a>
+                                            |
+                                            <a id="optimizationPlot_renderer_canvas" class="ggvis-renderer-button" onclick="return false;" data-plot-id="optimizationPlot" data-renderer="canvas">Canvas</a>
+                                        </li>
+                                        <li>
+                                            <a id="optimizationPlot_download" class="ggvis-download" data-plot-id="optimizationPlot">Download</a>
+                                        </li>
+                                    </ul>
+                                </nav>
+                            </div>
+                        </div>
                     </div>
 
                     <div class="tab-pane" id="tab-compare">
@@ -296,9 +329,6 @@
         </div>
     </div>
 
-    <!-- Bootstrap core JavaScript
-    ================================================== -->
-    <!-- Placed at the end of the document so the pages load faster -->
     <script src="js/typeahead.bundle.min.js"></script>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/handlebars.js/2.0.0/handlebars.min.js"></script>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore-min.js"></script>

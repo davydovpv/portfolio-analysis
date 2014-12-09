@@ -249,5 +249,76 @@ shinyServer(function(input, output, session) {
     currentPrices()
   })
   
+  # TEmp ---------------
+  
+  feasible.returns <- reactive({
+    comparison.table <- currentReturns()
+    symbols <- getSelectedSymbols(input)
+    
+    num <- length(symbols)
+    
+    r <- matrix(colMeans(comparison.table), nrow = num, ncol = 1)
+    C <- matrix(cov(comparison.table), nrow = num, ncol = num)
+    
+    means <- c()
+    sds <- c()  
+    weights <- c()
+    
+    all.weights <- get.weights(1, num, .1)
+    
+    for (i in 1:length(all.weights)) {
+      w <- matrix(all.weights[[i]], nrow=num, ncol=1)
+      p.mean <- t(w) %*% r
+      p.sd <- sqrt(t(w) %*% C %*% w)
+      
+      means <- c(means, p.mean)
+      sds <- c(sds, p.sd)
+      
+      weightStrings <- c()
+      for (j in 1:num) {
+        ws <- paste0(symbols[j], ": ", round(w[j]*100,2), "%")
+        weightStrings <- c(weightStrings, ws)
+      }
+      weight <- paste(weightStrings, collapse=" ")
+      weights <- c(weights, weight)
+    }
+    
+    feasible.returns <- data.frame(
+      Sd = sds * 100,
+      Mean = means * 100,
+      Weight = weights)
+    feasible.returns
+  })
+  
+  tooltip <- function(x) {
+    str(cars)
+    if (is.null(x)) return(NULL)
+    if (is.null(x$Mean)) return(NULL)
+    
+    all_data <- isolate(feasible.returns())
+    tolerance <- .000001
+    datum <- subset(all_data, abs(Mean - x$Mean) < tolerance & abs(Sd - x$Sd) < tolerance)
+    if (is.null(datum)) return(NULL)
+    
+    paste0("<strong>", datum$Weight, "</strong><br/>",
+           "Mean: ", round(datum$Mean, 2), "%<br/>",
+           "St. Dev: ", round(datum$Sd, 2), "%")
+  }
+  
+  
+  # A reactive expression with the ggvis plot
+  vis <- reactive({
+    
+    feasible.returns %>% 
+      ggvis(x=~Sd, y=~Mean) %>%
+      layer_points(size := 50, size.hover := 200,
+                   fillOpacity := 0.2, fillOpacity.hover := 0.5) %>%
+      add_tooltip(tooltip, "hover") %>%
+      add_axis("x", title = "Standard Deviation (%)") %>%
+      add_axis("y", title = "Mean Return (%)") 
+  })
+  
+  vis %>% bind_shiny("optimizationPlot")
+  
   
 })
