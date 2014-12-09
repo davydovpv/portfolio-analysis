@@ -25,39 +25,14 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 <link href="shared/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" />
     
-    <script>
-        $(function() {
-            function getQueryVariable(variable) {
-                var query = window.location.search.substring(1);
-                var vars = query.split('&');
-                for (var i = 0; i < vars.length; i++) {
-                    var pair = vars[i].split('=');
-                    if (decodeURIComponent(pair[0]) == variable) {
-                        return decodeURIComponent(pair[1]);
-                    }
-                }
-                console.log('Query variable %s not found', variable);
-            }
-
-            var symbols = getQueryVariable('symbols');
-            //var start = getQueryVariable('start');
-            //var end = getQueryVariable('end');
-            setTimeout(function() {
-                $('#selectedSymbols').val(symbols).trigger('change');
-                //$('.date-start').val(start).trigger('change');
-                //$('.date-end').val(end).trigger('change');
-            }, 1000);
-            //
-        });
-        
-    </script>
-    <title>THings</title>
+    
+    <title>Feasible Portfolios</title>
 </head>
 <body>
 <div class="container-fluid">
   
     <div class="span12">
-        <div style="display: none;">
+        <div style="">
             <div id="dates" class="shiny-date-range-input input-daterange">
                 <label class="control-label" for="dates">
                     <h3>Date range</h3>

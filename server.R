@@ -293,7 +293,6 @@ shinyServer(function(input, output, session) {
   })
   
   tooltip <- function(x) {
-    str(cars)
     if (is.null(x)) return(NULL)
     if (is.null(x$Mean)) return(NULL)
     
