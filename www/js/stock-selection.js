@@ -6294,7 +6294,15 @@ var SelectedSymbols = Backbone.Collection.extend({
         var weights = this.map(function (model) { return +model.get('weight'); });
         var sum = _.reduce(weights, function (memo, num) { return memo + num; }, 0);
         return sum;
-    }
+    },
+	getWeightsString: function() {
+		var str = this.map(function(model) {
+			var weight = model.get('weight') * 100;
+			weight = Math.round(weight * 100) / 100
+			return model.get('symbol') + ': ' + weight + '%';
+		}).join(', ');
+		return str;
+	}
 });
 
 var SelectedPortfolioView = Backbone.View.extend({
@@ -6361,15 +6369,13 @@ var HiddenInputsView = Backbone.View.extend({
     }
 });
 
+var defaults = ['MSFT', 'AAPL'].map(function(symbol, index, arr) {
+	return new SymbolModel({ symbol: symbol, weight: 1/arr.length });
+});
+	
+var selectedSymbols = new SelectedSymbols(defaults);
 
 $(function() {
-
-    var defaults = ['MSFT', 'AAPL'].map(function(symbol, index, arr) {
-        return new SymbolModel({ symbol: symbol, weight: 1/arr.length });
-    });
-
-    var selectedSymbols = new SelectedSymbols(defaults);
-
     var portfolioView = new SelectedPortfolioView({
         el: '#portfolio-view',
         collection: selectedSymbols

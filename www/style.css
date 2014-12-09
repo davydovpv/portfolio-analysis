@@ -169,6 +169,14 @@ h2 {
     margin-top: 8px;
 }
 
+.row-nomargin {
+    margin-left: -13px !important;
+}
+
+.table.data {
+    width: 100% !important;
+}
+
 /* Typeahead */
 
 .typeahead {

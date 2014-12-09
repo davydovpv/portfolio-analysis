@@ -39,11 +39,14 @@
     <script src="d3/d3.v3.min.js"></script>
     <script src="nvd3/nv.d3.min.js"></script>
     <script src="linechart-binding.js"></script>
+    
+    <script src="datatables/jquery.dataTables.min.js"></script>
 
     <link href="shared/shiny.css" rel="stylesheet" />
     <link href="shared/datepicker/css/datepicker.css" rel="stylesheet" />
     <link href="nvd3/nv.d3.min.css" rel="stylesheet" />
     <link href="shared/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet" />
+    <link href="datatables/jquery.dataTables.min.css" rel="stylesheet"/>
 </head>
 
 <body>
@@ -128,9 +131,9 @@
 
                     <div class="tab-pane" id="tab-stats">
                         
-                        <h2>Financial Calculations &amp; Statistics</h2>
+                        <h2>Financial Calculations &amp; Statistics <button id="save-portfolio" class="btn btn-success btn-sm pull-right">Save</button></h2>
 
-                        <div class="row">
+                        <div class="row row-nomargin">
                             <div class="col-md-12">
                                 <div class="panel panel-default">
                                     <div class="panel-heading">
@@ -143,7 +146,7 @@
                             </div>
                         </div>
                         
-                        <div class="row">
+                        <div class="row row-nomargin">
                             <div class="col-md-4">
                                 <div class="panel panel-default">
                                     <div class="panel-heading">
@@ -179,8 +182,8 @@
                         <hr/>
 
                         <h4>Portfolio Stocks</h4>
-                        <div class="row">
-                            <div class="col-md-6">
+                        <div class="row row-nomargin">
+                            <div class="col-md-12">
                                 <div id="statisticsStocks" class="shiny-html-output"></div>
                             </div>
                         </div>
@@ -322,7 +325,20 @@
 
                     <div class="tab-pane" id="tab-compare">
                         <h2>Compare Portfolios</h2>
-                        <div id="debugReturns" class="shiny-html-output"></div>
+                        <table id="compare-table" class="table table-bordered table-striped">
+                            <thead>
+                                <tr>
+                                    <th>Portfolio Name</th>
+                                    <th>Portfolio Weights</th>
+                                    <th>Start Date</th>
+                                    <th>End Date</th>
+                                    <th>Expected Return (%)</th>
+                                    <th>Expected Standard Deviation (%)</th>
+                                </tr>
+                            </thead>
+                            <tbody id="compare-portfolio-view">
+                            </tbody>
+                        </table>
                     </div>
                 </div>
             </div>
@@ -334,6 +350,7 @@
     <script src="http://cdnjs.cloudflare.com/ajax/libs/underscore.js/1.7.0/underscore-min.js"></script>
     <script src="http://cdnjs.cloudflare.com/ajax/libs/backbone.js/1.1.2/backbone-min.js"></script>
     <script src="js/stock-selection.js"></script>
+    <script src="js/save-portfolio.js"></script>
     
     <script>
         $(function () {
