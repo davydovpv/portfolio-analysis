@@ -18,11 +18,6 @@ var ComparisonTableView = Backbone.View.extend({
         });
     },
     add: function (model) {
-        //var self = this;
-        //var html = this.collection.map(function (model) {
-        //    return self.rowTemplate(model.toJSON());
-        //}).join();
-        //this.$el.html(html);
         this.datatable.row.add([
             model.get('name'),
             model.get('weights'),

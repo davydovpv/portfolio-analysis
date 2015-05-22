@@ -61,7 +61,7 @@ shinyServer(function(input, output, session) {
       erp = to.percent(get.geometric.mean(equity.market$Close) - get.annualized.Rf()),
       rf = to.percent(get.annualized.Rf()),
       ret = to.percent(get.geometric.mean(equity.market$Close)),
-      sig = to.percent(sd(convert.prices.to.returns(equity.market)$Close))
+      sig = to.percent(sd(convert.prices.to.returns(equity.market)$Close)*sqrt(52))
       )
     
     colnames(market) <- c("ERP", "Risk Free Rate", "Annual Return", "Standard Deviation")
@@ -86,7 +86,7 @@ shinyServer(function(input, output, session) {
     
     data.frame(
       ExpectedReturn = to.percent(get.portfolio.mean(symbols, weights, start, end)),
-      StandardDeviation = to.percent(p.sd))
+      StandardDeviation = to.percent(p.sd*sqrt(52)))
   })
   
   output$statisticsStocks <- renderTable({
@@ -98,7 +98,7 @@ shinyServer(function(input, output, session) {
     stock.returns <- currentReturns()
     
     expected.returns <- get.expected.returns(symbols, start, end)
-    standard.deviations <- as.vector(sapply(stock.returns, sd))
+    standard.deviations <- as.vector(sapply(stock.returns, sd))*sqrt(52)
     rf <- get.annualized.Rf()
         
     stocksTable <- data.frame(
@@ -297,7 +297,7 @@ shinyServer(function(input, output, session) {
       w <- matrix(all.weights[[i]], nrow=num, ncol=1)
       p.mean <- t(w) %*% r
       p.mean <- sum(expected.returns * as.vector(w))
-      p.sd <- sqrt(t(w) %*% C %*% w)
+      p.sd <- sqrt(t(w) %*% C %*% w) *sqrt(52)
       
       means <- c(means, p.mean)
       sds <- c(sds, p.sd)
